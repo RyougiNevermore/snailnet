@@ -71,39 +71,43 @@ func (p *Poll) Wait(iter func(fd int, note interface{}) error) error {
 	}
 }
 
+// todo events = EPOLLIN | EPOLLET; 边沿触发
 // AddReadWrite ...
 func (p *Poll) AddReadWrite(fd int) {
 	if err := syscall.EpollCtl(p.fd, syscall.EPOLL_CTL_ADD, fd,
 		&syscall.EpollEvent{Fd: int32(fd),
-			Events: syscall.EPOLLIN | syscall.EPOLLOUT,
+			Events: syscall.EPOLLIN  | syscall.EPOLLET | syscall.EPOLLOUT,
 		},
 	); err != nil {
 		panic(err)
 	}
 }
 
+// todo events = EPOLLIN | EPOLLET; 边沿触发
 // AddRead ...
 func (p *Poll) AddRead(fd int) {
 	if err := syscall.EpollCtl(p.fd, syscall.EPOLL_CTL_ADD, fd,
 		&syscall.EpollEvent{Fd: int32(fd),
-			Events: syscall.EPOLLIN,
+			Events: syscall.EPOLLIN | syscall.EPOLLET,
 		},
 	); err != nil {
 		panic(err)
 	}
 }
 
+// todo events = EPOLLIN | EPOLLET; 边沿触发
 // ModRead ...
 func (p *Poll) ModRead(fd int) {
 	if err := syscall.EpollCtl(p.fd, syscall.EPOLL_CTL_MOD, fd,
 		&syscall.EpollEvent{Fd: int32(fd),
-			Events: syscall.EPOLLIN,
+			Events: syscall.EPOLLIN | syscall.EPOLLET,
 		},
 	); err != nil {
 		panic(err)
 	}
 }
 
+// todo events = EPOLLIN | EPOLLET; 边沿触发
 // ModReadWrite ...
 func (p *Poll) ModReadWrite(fd int) {
 	if err := syscall.EpollCtl(p.fd, syscall.EPOLL_CTL_MOD, fd,
@@ -115,6 +119,7 @@ func (p *Poll) ModReadWrite(fd int) {
 	}
 }
 
+// todo events = EPOLLIN | EPOLLET; 边沿触发
 // ModDetach ...
 func (p *Poll) ModDetach(fd int) {
 	if err := syscall.EpollCtl(p.fd, syscall.EPOLL_CTL_DEL, fd,

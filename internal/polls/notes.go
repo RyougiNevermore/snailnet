@@ -16,6 +16,7 @@ func (l *spinlock) Unlock() {
 	atomic.StoreUintptr(&l.lock, 0)
 }
 
+// todo to be a futures
 type noteQueue struct {
 	mu    spinlock
 	notes []interface{}
