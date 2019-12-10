@@ -83,7 +83,7 @@ func (p *Poll) AddReadWrite(fd int) {
 	}
 }
 
-// todo events = EPOLLIN | EPOLLET; 边沿触发
+// todo events = EPOLLIN | EPOLLET; 边沿触发, 然后在 loop read 中 for 一直读到EAGAIN后break
 // AddRead ...
 func (p *Poll) AddRead(fd int) {
 	if err := syscall.EpollCtl(p.fd, syscall.EPOLL_CTL_ADD, fd,
